@@ -55,6 +55,7 @@ import Card from '../packages/card';
 import Rate from '../packages/rate';
 import Steps from '../packages/steps';
 import Step from '../packages/step';
+import Address from '../packages/address';
 import locale from 'element-ui/src/locale';
 
 const install = function(Vue, opts = {}) {
@@ -113,6 +114,7 @@ const install = function(Vue, opts = {}) {
   Vue.component(Rate.name, Rate);
   Vue.component(Steps.name, Steps);
   Vue.component(Step.name, Step);
+  Vue.component(Address.name, Address);
 
   Vue.use(Loading.directive);
 
@@ -188,5 +190,6 @@ module.exports = {
   Card,
   Rate,
   Steps,
-  Step
+  Step,
+  Address
 };
