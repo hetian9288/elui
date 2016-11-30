@@ -170,6 +170,7 @@
             src="../assets/images/element-logo.svg"
             alt="element-logo"
             class="nav-logo">
+          <a href="" target="_blank"></a>
           <img
             src="../assets/images/element-logo-small.svg"
             alt="element-logo"

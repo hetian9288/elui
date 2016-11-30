@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import entry from './app';
+import VueResource from 'vue-resource';
 import VueRouter from 'vue-router';
 import routes from './route.config';
 import Element from 'main/index.js';
@@ -13,6 +14,7 @@ import title from './i18n/title.json';
 
 Vue.use(Element);
 Vue.use(VueRouter);
+Vue.use(VueResource);
 Vue.component('demo-block', demoBlock);
 Vue.component('main-footer', MainFooter);
 Vue.component('main-header', MainHeader);

@@ -207,6 +207,10 @@
             {
               "path": "/card",
               "title": "Card 卡片"
+            },
+            {
+              "path": "/address",
+              "title": "Address 地址选择框"
             }
           ]
         }
@@ -421,6 +425,10 @@
             {
               "path": "/card",
               "title": "Card"
+            },
+            {
+              "path": "/address",
+              "title": "Address"
             }
           ]
         }
