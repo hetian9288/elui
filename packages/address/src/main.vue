@@ -31,8 +31,6 @@
     </div>
 </template>
 <script>
-  import cityJson from './city.json';
-  
   export default {
     name: 'el-address',
     props: {
@@ -44,7 +42,13 @@
         type: String
       },
       value: {},
-      disabled: Boolean
+      disabled: Boolean,
+      json_file: {
+        type: String
+      },
+      ajax_url: {
+        type: String
+      }
     },
     data() {
       return {
@@ -56,7 +60,10 @@
         province: [],
         city: [],
         county: [],
-        street: []
+        street: [],
+        jsonUrl: this.json_file,
+        ajaxUrl: this.ajax_url,
+        cityJson: {}
       };
     },
     methods: {
@@ -81,7 +88,7 @@
           this.street.splice(0, this.street.length);
           if (this.dataVal[2] !== null && typeof (this.value[2]) !== 'undefined') {
             this.street.splice(0, this.street.length);
-            this.$http.jsonp('http://passport.weihuo.top/district.jsonp', { params: { 'upid': this.dataVal[2].id } }).then((response) => {
+            this.$http.jsonp(this.ajaxUrl, { params: { 'upid': this.dataVal[2].id } }).then((response) => {
               if (response.body.code === 200) {
                 for (var item in response.body.data.address) {
                   if (response.body.data.address[item].upid === parseInt(this.dataVal[2].id, 10)) {
@@ -96,9 +103,9 @@
             case 'city':
               this.city.splice(0, this.city.length);
               if (this.dataVal[0] !== null && typeof (this.value[0]) !== 'undefined') {
-                for (let item in cityJson.city) {
-                  if (cityJson.city[item].upid === parseInt(this.dataVal[0].id, 10)) {
-                    this.city.push(cityJson.city[item]);
+                for (let item in this.cityJson.city) {
+                  if (this.cityJson.city[item].upid === parseInt(this.dataVal[0].id, 10)) {
+                    this.city.push(this.cityJson.city[item]);
                   }
                 }
               }
@@ -106,9 +113,9 @@
             case 'county':
               this.county.splice(0, this.county.length);
               if (this.dataVal[1] !== null && typeof (this.value[1]) !== 'undefined') {
-                for (let item in cityJson.city) {
-                  if (cityJson.city[item].upid === parseInt(this.dataVal[1].id, 10)) {
-                    this.county.push(cityJson.city[item]);
+                for (let item in this.cityJson.city) {
+                  if (this.cityJson.city[item].upid === parseInt(this.dataVal[1].id, 10)) {
+                    this.county.push(this.cityJson.city[item]);
                   }
                 }
               }
@@ -119,9 +126,9 @@
       setSelectData(level, pid, el, onTabName, nextTabName) {
         if (level < 3) {
           el.splice(0, el.length);
-          for (var item in cityJson.city) {
-            if (cityJson.city[item].upid === parseInt(pid, 10)) {
-              el.push(cityJson.city[item]);
+          for (var item in this.cityJson.city) {
+            if (this.cityJson.city[item].upid === parseInt(pid, 10)) {
+              el.push(this.cityJson.city[item]);
             }
           }
           if (el.length <= 0) {
@@ -132,7 +139,7 @@
           }
         } else if (level === 3) {
           el.splice(0, el.length);
-          this.$http.jsonp('http://passport.weihuo.top/district.jsonp', { params: { 'upid': pid } }).then((response) => {
+          this.$http.jsonp(this.ajaxUrl, { params: { 'upid': pid } }).then((response) => {
             if (response.body.code === 200) {
               for (var item in response.body.data.address) {
                 if (response.body.data.address[item].upid === parseInt(pid, 10)) {
@@ -199,19 +206,25 @@
         },
         deep: true
       },
+      'cityJson': function(val, oldVal) {
+        if (typeof this.cityJson.province === 'object') {
+          this.province = this.cityJson.province;
+        }
+      },
       'value': {
         handler: function(val, oldVal) {
           this.dataVal = this.value;
           this.setValText();
-          this.tabName = 'province';
         },
         deep: true
       }
     },
-    created() {},
-    mounted() {
-      this.province = cityJson.province;
-    }
+    created() {
+      this.$http.get(this.jsonUrl).then((ret) => {
+        this.cityJson = ret.body;
+      });
+    },
+    mounted() {}
   };
 </script>
 <style lang="css" scoped>

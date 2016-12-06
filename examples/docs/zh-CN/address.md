@@ -27,6 +27,9 @@
 <div>
   <p>{{ data }}</p>
   <el-address
+    label="dasdad"
+    json_file="/city.json"
+    ajax_url="http://passport.weihuo.top/district.jsonp"
     v-model="data">
   </el-address>
   <el-button type="text" @click="to()">设置地区</el-button>
