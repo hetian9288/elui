@@ -121,6 +121,7 @@
 
     created() {
       this.parent.options.push(this);
+      this.parent.cachedOptions.push(this);
       this.parent.optionsCount++;
       this.parent.filteredOptionsCount++;
       this.index = this.parent.options.indexOf(this);
