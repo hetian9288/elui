@@ -69,6 +69,9 @@
     methods: {
       show() {
         this.disable = !this.disable;
+        if (this.disable) {
+          this.tabName = 'province';
+        }
       },
       hide() {
         this.disable = false;
@@ -201,8 +204,12 @@
       'dataVal': {
         handler: function(val, oldVal) {
           this.valShow();
-          this.$emit('input', this.dataVal);
-          this.$emit('change', this.dataVal);
+          if (typeof this.dataVal[0] === 'undefined') {
+            this.dataVal = { 0: null, 1: null, 2: null, 3: null };
+          } else {
+            this.$emit('input', this.dataVal);
+            this.$emit('change', this.dataVal);
+          }
         },
         deep: true
       },

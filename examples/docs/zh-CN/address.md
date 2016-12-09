@@ -9,6 +9,9 @@
     methods: {
       to() {
         this.data = { "0": { "id": "3", "text": "河北" }, "1": { "id": "81", "text": "衡水市" }, "2": { "id": "1262", "text": "安平县" }, "3": { "id": "6848", "text": "大子文乡" } };
+      },
+      del() {
+        this.data = {};
       }
     }
   };
@@ -33,6 +36,7 @@
     v-model="data">
   </el-address>
   <el-button type="text" @click="to()">设置地区</el-button>
+  <el-button type="text" @click="del()">清空</el-button>
   </div>
 </template>
 
